@@ -53,7 +53,13 @@ postQuartoR :: Handler Value
 postQuartoR = undefined
 
 getEscalaIdR :: FuncionarioId -> Handler Value
-getEscalaIdR = undefined
+getEscalaIdR funcId = do
+    pontos <- runDB $ do
+        Just (Entity _ escala) <- selectFirst [EscalaFuncionarioId ==. funcId] [Desc EscalaId]
+        -- map  :: (a ->   b) -> [a] ->   [b]
+        -- mapM :: (a -> m b) -> [a] -> m [b]
+        mapM get404 $ escalaPontos escala
+    sendStatusJSON ok200 (object ["response" .= pontos])
 
 postEscalaIdR :: FuncionarioId -> Handler Value
 postEscalaIdR = undefined
