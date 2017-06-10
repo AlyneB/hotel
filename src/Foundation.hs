@@ -33,8 +33,8 @@ Quarto json
     status        Bool
 
 Escala json
-    funcionarioId FuncionarioId
     pontos        [PontoId]
+    funcionarioId FuncionarioId
 
 Ponto json
     horario       UTCTime

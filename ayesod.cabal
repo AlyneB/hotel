@@ -42,6 +42,7 @@ executable         ayesod
                  , time
                  , persistent-template
                  , aeson
+                 , http-types
     
     other-modules: Foundation,
                    Import,

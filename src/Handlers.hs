@@ -7,14 +7,17 @@ import Yesod
 import Foundation
 import Control.Monad.Logger (runStdoutLoggingT)
 import Control.Applicative
-import Data.Text
+import qualified Data.Text as T
+import Network.HTTP.Types.Status
 
 import Database.Persist.Postgresql
 
 mkYesodDispatch "Sitio" pRoutes
 
 getDeptoR :: Handler Value 
-getDeptoR = undefined
+getDeptoR = do 
+    deptos <- runDB $ selectList [] [Asc DepartamentoNome]
+    sendStatusJSON ok200 (object ["response" .= deptos]) -- ok200 é uma funcao que retorna um status ok
 
 postDeptoR :: Handler Value 
 postDeptoR = undefined
@@ -56,7 +59,16 @@ postEscalaIdR :: FuncionarioId -> Handler Value
 postEscalaIdR = undefined
 
 getEscalaR :: Handler Value
-getEscalaR = undefined 
+getEscalaR = {-do
+    escalas' <- runDB $ do
+        escalas <- selectList [] []
+            -- você quer :: m [a]
+            -- map dá    :: [m a]
+        return $ mapM (\(Entity _ escala) ->
+            (escalaFuncionarioId escala, mapM get404 (escalaPontos escala)))
+                escalas-}
+    undefined
+    -- sendStatusJSON ok200 (object ["response" .= escalas'])
 
 postEscalaR :: Handler Value
 postEscalaR = undefined 
