@@ -9,24 +9,16 @@ import GHC.Generics (Generic)
 import Data.Text
 import Database.Persist.Postgresql
     (ConnectionPool, SqlBackend, runSqlPool, runMigration)
+import Data.Time.Calendar
+import Data.Time.Clock
+import Persistencia
 
 data Sitio = Sitio {connPool :: ConnectionPool}
-
-data Cargo = Gerente | Cozinheiro | Camareiro | Recepcionista | Mensageiro deriving (Generic, Read, Show)
-instance ToJSON Cargo
-instance FromJSON Cargo
-derivePersistField "Cargo"
-
-data Depto = Quartos | Cozinha | Lavanderia | Recepcao deriving (Generic, Read, Show)
-instance ToJSON Depto
-instance FromJSON Depto
-derivePersistField "Depto"
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 Departamento json
    nome           Depto
    gerente        FuncionarioId Maybe
-   UniqueGerente gerente nome
 
 Funcionario json
    nome           Text

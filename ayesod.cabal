@@ -26,6 +26,7 @@ executable         ayesod
                 ViewPatterns
                 TupleSections
                 RecordWildCards
+                DeriveGeneric
 
     build-depends: base                          
                  , yesod                         
@@ -38,7 +39,11 @@ executable         ayesod
                  , persistent-postgresql         
                  , monad-logger
                  , shakespeare
+                 , time
+                 , persistent-template
+                 , aeson
     
     other-modules: Foundation,
                    Import,
-                   Handlers
+                   Handlers,
+                   Persistencia
